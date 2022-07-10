@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample</title>
+  </head>
+  <body>
+    <div id="report">...</div>
+    <button onclick="check()">Try</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/3.0.0-rc.5/web3.min.js"></script>
+
+    <script>
+      async function show(address) {
+        //var address = "0x526974cfAddcC72055CFf68cC8746903549288e9"
+        var web3 = new Web3(ethereum);
+        var balance = await web3.eth.getBalance(address);
+        var target = document.getElementById("report");
+        var result = web3.utils.fromWei(balance);
+        target.innerText = result;
+      }
+
+      async function check() {
+        if (typeof ethereum == "undefined") {
+          alert("You dont have Ethereum provider");
+        }
+
+        var accounts = await ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        var target = document.getElementById("report");
+
+        target.innerHTML = accounts[0];
+        show(accounts[0]);
+      }
+    </script>
+  </body>
+</html>
